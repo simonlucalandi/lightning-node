@@ -21,8 +21,7 @@ RUN set -ex \
     && echo "$SHA256 ${BITCOIN_ARCHIVE}" | sha256sum -c - \
     && gpg --import ./laanwj-releases.asc \
     && gpg --verify SHA256SUMS.asc \
-    && tar -xzf ${BITCOIN_ARCHIVE} \
-    && install -m 0755 -o root -g root -t /usr/local/bin bitcoin-${BITCOIN_VERSION}/bin/* \
+    && tar -xzf ${BITCOIN_ARCHIVE} -C /usr/local --strip-components=1 --exclude=*-qt \
     && rm -rf /tmp/* \
     && bitcoind --version    
 
